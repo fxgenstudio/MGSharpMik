@@ -4,22 +4,19 @@ using System.IO;
 
 namespace SharpMik.Player
 {
-    public class MikMod
+	public class MikMod
 	{
 		String m_Error;
 		String m_CommandLine;
 
 		public event SharpMik.Player.ModPlayer.PlayerStateChangedEvent PlayerStateChangeEvent;
 
-		public bool HasError
-		{
-			get { return !String.IsNullOrEmpty(m_Error); }
+		public bool HasError {
+			get { return !String.IsNullOrEmpty (m_Error); }
 		}
 
-		public String ErrorMessage
-		{
-			get
-			{
+		public String ErrorMessage {
+			get {
 				String error = m_Error;
 				m_Error = null;
 				return error;
@@ -27,23 +24,21 @@ namespace SharpMik.Player
 		}
 
 
-		public MikMod()
+		public MikMod ()
 		{
-			ModPlayer.PlayStateChangedHandle += new ModPlayer.PlayerStateChangedEvent(ModPlayer_PlayStateChangedHandle);
+			ModPlayer.PlayStateChangedHandle += new ModPlayer.PlayerStateChangedEvent (ModPlayer_PlayStateChangedHandle);
 		}
 
-		void ModPlayer_PlayStateChangedHandle(ModPlayer.PlayerState state)
+		void ModPlayer_PlayStateChangedHandle (ModPlayer.PlayerState state)
 		{
-			if (PlayerStateChangeEvent != null)
-			{
-				PlayerStateChangeEvent(state);
+			if (PlayerStateChangeEvent != null) {
+				PlayerStateChangeEvent (state);
 			}
 		}
 
-		public float GetProgress()
+		public float GetProgress ()
 		{
-			if (ModPlayer.mod != null)
-			{
+			if (ModPlayer.mod != null) {
 				float current = (ModPlayer.mod.sngpos * ModPlayer.mod.numrow) + ModPlayer.mod.patpos;
 				float total = ModPlayer.mod.numpos * ModPlayer.mod.numrow;
 
@@ -52,39 +47,39 @@ namespace SharpMik.Player
 			return 0.0f;
 		}
 
-		public bool Init<T>() where T : IModDriver, new()
+		public bool Init<T> () where T : IModDriver, new()
 		{
-			return Init<T>("");
+			return Init<T> ("");
 		}
 
-		public bool Init<T>(String command) where T : IModDriver, new()
+		public bool Init<T> (String command) where T : IModDriver, new()
 		{
 			m_CommandLine = command;
-			ModDriver.LoadDriver<T>();
+			ModDriver.LoadDriver<T> ();
 
-			return ModDriver.MikMod_Init(command);
+			return ModDriver.MikMod_Init (command);
 		}
 
-		public T Init<T>(String command, out bool result) where T : IModDriver, new()
+		public T Init<T> (String command, out bool result) where T : IModDriver, new()
 		{
 			m_CommandLine = command;
-			T driver = ModDriver.LoadDriver<T>();
+			T driver = ModDriver.LoadDriver<T> ();
 
-			result = ModDriver.MikMod_Init(command);
+			result = ModDriver.MikMod_Init (command);
 
 			return driver;
 		}
 
-		public void Reset()
+		public void Reset ()
 		{
-			ModDriver.MikMod_Reset(m_CommandLine);
+			ModDriver.MikMod_Reset (m_CommandLine);
 		}
 
-		public void Exit()
+		public void Exit ()
 		{
-			ModDriver.MikMod_Exit();
+			ModDriver.MikMod_Exit ();
 		}
-
+#if !PORTABLE
 		public Module LoadModule(String fileName)
 		{
 			m_Error = null;
@@ -106,44 +101,37 @@ namespace SharpMik.Player
 
 			return null;
 		}
-
-		public Module LoadModule(Stream stream)
+#endif
+		public Module LoadModule (Stream stream)
 		{
 			m_Error = null;
-			if (ModDriver.Driver != null)
-			{
-				try
-				{
-					return ModuleLoader.Load(stream,128,0);
-				}
-				catch (System.Exception ex)
-				{
+			if (ModDriver.Driver != null) {
+				try {
+					return ModuleLoader.Load (stream, 128, 0);
+				} catch (System.Exception ex) {
 					m_Error = ex.Message;
 				}
-			}
-			else
-			{
+			} else {
 				m_Error = "A Driver needs to be set before loading a module";
 			}
 
 			return null;
 		}
 
-		public void UnLoadModule(Module mod)
+		public void UnLoadModule (Module mod)
 		{
 			// Make sure the mod is stopped before unloading.
-			Stop();
-			ModuleLoader.UnLoad(mod);
+			Stop ();
+			ModuleLoader.UnLoad (mod);
 		}
 
-		public void UnLoadCurrent()
+		public void UnLoadCurrent ()
 		{
-			if (ModPlayer.mod != null)
-			{
-				ModuleLoader.UnLoad(ModPlayer.mod);
+			if (ModPlayer.mod != null) {
+				ModuleLoader.UnLoad (ModPlayer.mod);
 			}
 		}
-
+#if !PORTABLE
 		public Module Play(String name)
 		{
 			Module mod = LoadModule(name);
@@ -155,7 +143,7 @@ namespace SharpMik.Player
 		
 			return mod;
 		}
-
+#endif
 
 		public Module Play(Stream stream)
 		{

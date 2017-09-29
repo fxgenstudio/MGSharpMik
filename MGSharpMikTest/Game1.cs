@@ -52,11 +52,11 @@ namespace SharpMikMGTest
             }
 
             //Load Module
-            m_Mod = m_Player.LoadModule("content\\stardust.MOD");
+	    //m_Mod = m_Player.LoadModule(TitleContainer.OpenStream ("Content\\Stardust.MOD"));
 
             //Start playing...
-            if (m_Mod!=null)
-                m_Player.Play(m_Mod);
+            //if (m_Mod!=null)
+              //  m_Player.Play(m_Mod);
 
             base.Initialize();
         }
@@ -70,6 +70,9 @@ namespace SharpMikMGTest
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteFont = Content.Load<SpriteFont>("Debug");
+
+            m_Mod = Content.Load<Module> ("Stardust");
+            m_Player.Play (m_Mod);
 
             // TODO: use this.Content to load your game content here
         }
@@ -90,8 +93,14 @@ namespace SharpMikMGTest
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+			var kbs = Keyboard.GetState ();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kbs.IsKeyDown(Keys.Escape))
                 Exit();
+
+			if (kbs.IsKeyDown (Keys.Left))
+				m_Player.SetPosition (m_Mod.sngpos - 2);
+			if (kbs.IsKeyDown (Keys.Right))
+				m_Player.SetPosition (m_Mod.sngpos + 2);
 
             // TODO: Add your update logic here
 

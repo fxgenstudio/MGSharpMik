@@ -1027,7 +1027,7 @@ namespace SharpMik.Drivers
 
 							if (s_TestModeOn && t == s_TestChannel)
 							{
-								Console.Write("here");
+								Debug.WriteLine("here");
 							}
 							
 							AddChannel(m_VcTickBuf, portion);
