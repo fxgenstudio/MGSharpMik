@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:../../SharpMikLib.Content.Pipeline/bin/Debug/SharpMikLib.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -19,4 +20,14 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Debug.spritefont
+
+#begin LOVE.MOD
+/importer:ModImporter
+/processor:ModuleProcessor
+/build:LOVE.MOD
+
+#begin Stardust.MOD
+/importer:ModImporter
+/processor:ModuleProcessor
+/build:Stardust.MOD
 

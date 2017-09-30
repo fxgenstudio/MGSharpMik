@@ -9,6 +9,7 @@ using System.Diagnostics;
 
 namespace SharpMik.Drivers
 {
+#if !PORTABLE
 	public class WavDriver : VirtualDriver1
 	{
 		BinaryWriter m_FileStream;
@@ -112,4 +113,5 @@ namespace SharpMik.Drivers
 			m_FileStream.Write((uint)dumpsize);			
 		}
 	}
+#endif
 }

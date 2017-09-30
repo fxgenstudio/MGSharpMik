@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SharpMik.Interfaces;
 using System.IO;
+using System.Diagnostics;
 
 namespace SharpMik.Loaders
 {
@@ -156,7 +157,7 @@ namespace SharpMik.Loaders
 				if (numchn == 4 || numchn == 8)
 					return true;		
 				else
-					Console.WriteLine("\rUnknown FLT{0} module type\n", numchn);
+					Debug.WriteLine("\rUnknown FLT{0} module type\n", numchn);
 				return false;
 			}
 

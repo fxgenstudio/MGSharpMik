@@ -7,6 +7,7 @@ using SharpMik.IO;
 using SharpMik;
 using SharpMik.Extentions;
 using SharpMik.Player;
+using System.Diagnostics;
 
 namespace SharpMik.Interfaces
 {
@@ -407,7 +408,7 @@ namespace SharpMik.Interfaces
 		{
 			if (eff >= 0x10)
 			{
-				Console.WriteLine("UniPTEffect called with incorrect eff value {0}", eff);
+				Debug.WriteLine("UniPTEffect called with incorrect eff value {0}", eff);
 			}
 			else
 			{

@@ -49,11 +49,11 @@
     <Compile Include="XNADriver.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
@@ -112,6 +112,14 @@
     <ProjectReference Include="..\SharpMik\SharpMikLib.csproj">
       <Project>{DE1F0D72-F331-461F-A784-392348643BAA}</Project>
       <Name>SharpMikLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpMikLib.Content.Pipeline\SharpMikLib.Content.Pipeline.csproj">
+      <Project>{16E888CF-56BE-4CCD-B862-6C0BEA94DBAE}</Project>
+      <Name>SharpMikLib.Content.Pipeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpMikLib.MonoGame\SharpMikLib.MonoGame.csproj">
+      <Project>{62CFF4C0-9E2F-4161-95F2-17728C0C76C3}</Project>
+      <Name>SharpMikLib.MonoGame</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

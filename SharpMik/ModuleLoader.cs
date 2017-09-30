@@ -11,52 +11,57 @@ using SharpMik.Player;
 namespace SharpMik
 {
 
-    /*
-	 * Handles the mod loading and unloading, by the way of finding which loader should be used
-	 * and asking it to load the basics of the module then do some extra setup after.
-	 * 
-	 * I don't see much need to change the basics of this file, the static nature of it should be fine.
-	 */
-    public class ModuleLoader
+	/*
+	     * Handles the mod loading and unloading, by the way of finding which loader should be used
+	     * and asking it to load the basics of the module then do some extra setup after.
+	     * 
+	     * I don't see much need to change the basics of this file, the static nature of it should be fine.
+	     */
+	public class ModuleLoader
 	{
 		#region private static variables
 		static bool s_UseBuiltInModuleLoaders = true;
-		static List<Type> s_RegistedModuleLoader = new List<Type>();
+		static List<Type> s_RegistedModuleLoader = new List<Type> ();
 		static bool s_HasAutoRegisted = false;
 		#endregion
 
 		#region static accessors
-		static public bool UseBuiltInModuleLoaders
-		{
+		static public bool UseBuiltInModuleLoaders {
 			get { return s_UseBuiltInModuleLoaders; }
 			set { s_UseBuiltInModuleLoaders = value; }
 		}
 		#endregion
 
 		#region loader registration
-		static public void BuildRegisteredModules()
+		static public void BuildRegisteredModules ()
 		{
-			if (!s_HasAutoRegisted && s_UseBuiltInModuleLoaders)
-			{
-				var list = Assembly.GetExecutingAssembly().GetTypes().Where( x => x.IsSubclassOf(typeof(IModLoader)));
+#if !PORTABLE
+			if (!s_HasAutoRegisted && s_UseBuiltInModuleLoaders) {
+				var list = Assembly.GetExecutingAssembly ().GetTypes ().Where (x => x.IsSubclassOf (typeof (IModLoader)));
 
-				foreach (var type in list)
-				{
-					s_RegistedModuleLoader.Add(type);
+				foreach (var type in list) {
+					s_RegistedModuleLoader.Add (type);
 				}
-				
+
 				s_HasAutoRegisted = false;
 			}
+#else
+
+			if (s_UseBuiltInModuleLoaders) {
+				s_RegistedModuleLoader.Add (typeof (Loaders.ModLoader));
+				s_RegistedModuleLoader.Add (typeof (Loaders.XMLoader));
+			}
+#endif
 		}
 
-		public void RegisterModuleLoader<T>() where T: IModLoader
+		public void RegisterModuleLoader<T> () where T : IModLoader
 		{
-			s_RegistedModuleLoader.Add(typeof(T));
+			s_RegistedModuleLoader.Add (typeof (T));
 		}
-		#endregion
+#endregion
 
-
-		#region Module Loading
+#region Module Loading
+#if !PORTABLE
 		public static Module Load(String fileName)
 		{
 			//try
@@ -71,7 +76,7 @@ namespace SharpMik
 				//throw new Exception("Failed to open " + fileName,ex);
 			}
 		}
-
+#endif
 		public static Module Load(Stream stream, int maxchan, int curious)
 		{
 			BuildRegisteredModules();
@@ -212,10 +217,10 @@ namespace SharpMik
 
 			throw new Exception("Failed to load", ex);
 		}
-		#endregion
+#endregion
 
 
-		#region Common Load Implementation
+#region Common Load Implementation
 		private static bool ML_LoadSamples(Module of, ModuleReader modreader)
 		{
 			int u;
@@ -232,10 +237,10 @@ namespace SharpMik
 		}
 
 
-		#endregion
+#endregion
 
 
-		#region Module unloading
+#region Module unloading
 		public static void UnLoad(Module mod)
 		{
 			ModPlayer.Player_Exit_internal(mod);
@@ -258,6 +263,6 @@ namespace SharpMik
 				}
 			}
 		}
-		#endregion
+#endregion
 	}
 }
