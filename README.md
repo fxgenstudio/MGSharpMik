@@ -2,7 +2,7 @@
 
 Module player example for MonoGame (based on SharpMik source code http://sharpmik.codeplex.com/)
 
-Code: FxGen
+Code: TheGouldfish & Dellis & FxGen
 
 
 # Usage
@@ -21,18 +21,23 @@ Code: FxGen
         Debug.WriteLine(ex);
     }
 
-    //Load Module
-    m_Mod = m_Player.LoadModule("content\\stardust.MOD");
+    //Load module from monogame content
+    m_Mod = Content.Load<Module> ("Stardust");
 
     //Start playing...
     if (m_Mod!=null)
         m_Player.Play(m_Mod);
+
+    m_Player.Play (m_Mod);
 
 
 # Versions
 
 V1.0
  - creation
+V1.1
+ - added monogame content importer
+ 
 
 # License
 

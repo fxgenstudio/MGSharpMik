@@ -5,5 +5,7 @@
   <Config />
   <SourceFiles>
     <File>C:/Projects/MonoGame/MGSharpMik/MGSharpMikTest/Content/Debug.spritefont</File>
+    <File>C:/Projects/MonoGame/MGSharpMik/MGSharpMikTest/Content/LOVE.MOD</File>
+    <File>C:/Projects/MonoGame/MGSharpMik/MGSharpMikTest/Content/Stardust.MOD</File>
   </SourceFiles>
 </SourceFileCollection>

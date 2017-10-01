@@ -51,12 +51,6 @@ namespace SharpMikMGTest
                 Debug.WriteLine(ex);
             }
 
-            //Load Module
-	    //m_Mod = m_Player.LoadModule(TitleContainer.OpenStream ("Content\\Stardust.MOD"));
-
-            //Start playing...
-            //if (m_Mod!=null)
-              //  m_Player.Play(m_Mod);
 
             base.Initialize();
         }
@@ -71,7 +65,10 @@ namespace SharpMikMGTest
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteFont = Content.Load<SpriteFont>("Debug");
 
+            //Load module
             m_Mod = Content.Load<Module> ("Stardust");
+
+            //Play module
             m_Player.Play (m_Mod);
 
             // TODO: use this.Content to load your game content here
